@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>共享进度条示例</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; }
+    .progress-container { margin-bottom: 20px; }
+    .label { margin-bottom: 5px; }
+    .bar {
+      width: 100%; height: 20px; background: #eee;
+      border-radius: 5px; overflow: hidden;
+    }
+    .fill {
+      height: 100%; background: #4caf50;
+      width: 0%; transition: width 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <h1>共享进度条</h1>
+
+  <!-- 主进度 -->
+  <div class="progress-container">
+    <div class="label">主进度: <span id="mainValue">0%</span></div>
+    <div class="bar"><div class="fill" id="mainBar"></div></div>
+  </div>
+
+  <!-- 子进度 -->
+  <div class="progress-container">
+    <div class="label">子进度1: <span id="sub1Value">0%</span></div>
+    <div class="bar"><div class="fill" id="sub1Bar"></div></div>
+  </div>
+
+  <div class="progress-container">
+    <div class="label">子进度2: <span id="sub2Value">0%</span></div>
+    <div class="bar"><div class="fill" id="sub2Bar"></div></div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script>
+    // TODO: 把这里替换成你自己的 Firebase 配置
+    const firebaseConfig = {
+      apiKey: "你的APIKEY",
+      authDomain: "xxx.firebaseapp.com",
+      databaseURL: "https://xxx.firebaseio.com",
+      projectId: "xxx",
+      storageBucket: "xxx.appspot.com",
+      messagingSenderId: "xxx",
+      appId: "xxx"
+    };
+
+    // 初始化 Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // 监听数据库中的进度数据
+    db.ref("progress").on("value", (snapshot) => {
+      const data = snapshot.val() || { main: 0, sub1: 0, sub2: 0 };
+      updateBar("main", data.main);
+      updateBar("sub1", data.sub1);
+      updateBar("sub2", data.sub2);
+    });
+
+    function updateBar(name, value) {
+      document.getElementById(name + "Value").textContent = value + "%";
+      document.getElementById(name + "Bar").style.width = value + "%";
+    }
+  </script>
+</body>
+</html>
