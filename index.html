@@ -216,5 +216,41 @@
   },20);
 </script>
 
+<!-- 在 body 结束前，加入 Firebase SDK -->
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+<script>
+  // Firebase 配置
+  const firebaseConfig = {
+    apiKey: "AIzaSyChcbvmEbTKdmSIXX9EouQ9miMcS3a6OwE",
+    authDomain: "love-bar-41200.firebaseapp.com",
+    databaseURL: "https://love-bar-41200-default-rtdb.firebaseio.com",
+    projectId: "love-bar-41200",
+    storageBucket: "love-bar-41200.firebasestorage.app",
+    messagingSenderId: "28050753647",
+    appId: "1:28050753647:web:672ac4a5d6eb7b2bd2259a",
+    measurementId: "G-79JKRJCEW7"
+  };
+
+  // 初始化 Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const analytics = firebase.analytics();
+  const db = firebase.database();
+
+  // 示例：监听进度条数据
+  db.ref("progress").on("value", (snapshot) => {
+    const data = snapshot.val() || { main: 0, sub1: 0, sub2: 0, sub3: 0 };
+    updateBar("main", data.main);
+    updateBar("sub1", data.sub1);
+    updateBar("sub2", data.sub2);
+    updateBar("sub3", data.sub3);
+  });
+</script>
+
+
+
 </body>
 </html>
