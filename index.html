@@ -1,73 +1,220 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>共享进度条示例</title>
-  <style>
-    body { font-family: sans-serif; margin: 40px; }
-    .progress-container { margin-bottom: 20px; }
-    .label { margin-bottom: 5px; }
-    .bar {
-      width: 100%; height: 20px; background: #eee;
-      border-radius: 5px; overflow: hidden;
+<meta charset="UTF-8">
+<title>粉色爱心进度条预览</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('htmlbackground.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  h1 {
+    text-align: center;
+    margin: 40px 0;
+    color: #ff85b3;
+    text-shadow: 0 0 10px #ffb6c1;
+  }
+
+  .progress-container {
+    margin: 20px auto;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(255, 182, 193, 0.4);
+  }
+
+  .label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  .bar {
+    width: 100%;
+    height: 35px;
+    background: rgba(255, 182, 193,0.3);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff85b3, #ff1493);
+    border-radius: 20px 0 0 20px;
+    text-align: right;
+    line-height: 35px;
+    font-weight: bold;
+    padding-right: 15px;
+    transition: width 0.5s ease-in-out;
+    color: white;
+    text-shadow: 0 0 5px #ffb6c1;
+  }
+
+  /* 小进度条样式 */
+  .sub-container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+  }
+
+  .toggle-btn {
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 5px;
+    color: #ffb6c1;
+    font-size: 16px;
+    user-select: none;
+  }
+
+    .info {
+      color: #ffb6c1; /* 粉色文字 */
+      background: rgba(255, 182, 193, 0.2);
+      border-radius: 10px;
     }
-    .fill {
-      height: 100%; background: #4caf50;
-      width: 0%; transition: width 0.3s;
+    .info {
+      color: #ffb6c1;
+      background: rgba(0,0,0,0.3); /* 半透明黑色底 */
+      padding: 5px;
+      border-radius: 5px;
     }
-  </style>
+
+
+
+    .floating {
+      position: absolute;
+      animation-name: float;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-120vh) rotate(360deg); }
+    }
+
+  }
+
+</style>
 </head>
 <body>
-  <h1>共享进度条</h1>
 
-  <!-- 主进度 -->
-  <div class="progress-container">
-    <div class="label">主进度: <span id="mainValue">0%</span></div>
-    <div class="bar"><div class="fill" id="mainBar"></div></div>
+<h1>❤恋爱总进度❤</h1>
+
+<!-- 主进度条 -->
+<div class="progress-container">
+  <div class="label">总进度: <span id="mainValue">0%</span></div>
+  <div class="bar"><div class="fill" id="mainBar">0%</div></div>
+
+  <!-- 子进度条1 -->
+  <div class="sub-container">
+    <div class="label">爱你进度: <span id="sub1Value">0%</span></div>
+    <div class="bar"><div class="fill" id="sub1Bar">0%</div></div>
+    <div class="toggle-btn" onclick="toggleInfo('info1', this)">▼ 展开信息</div>
+    <div class="info" id="info1">
+      小鸡毛超级超级超级超级超级爱小白的，一开始是好好的好感，然后就是喜欢，然后就是特别喜欢，到现在依旧是变成了超级超级超级爱❤！
+    </div>
   </div>
 
-  <!-- 子进度 -->
-  <div class="progress-container">
-    <div class="label">子进度1: <span id="sub1Value">0%</span></div>
-    <div class="bar"><div class="fill" id="sub1Bar"></div></div>
+  <!-- 子进度条2 -->
+  <div class="sub-container">
+    <div class="label">金金进度: <span id="sub2Value">0%</span></div>
+    <div class="bar"><div class="fill" id="sub2Bar">0%</div></div>
+    <div class="toggle-btn" onclick="toggleInfo('info2', this)">▼ 展开信息</div>
+    <div class="info" id="info2">
+      目前只有小新金、小螃蟹金、小史迪金、这些小小金，我要努力给你挣好多好多大金！！！！！
+    </div>
   </div>
 
-  <div class="progress-container">
-    <div class="label">子进度2: <span id="sub2Value">0%</span></div>
-    <div class="bar"><div class="fill" id="sub2Bar"></div></div>
+  <!-- 子进度条3 -->
+  <div class="sub-container">
+    <div class="label">小屋车车进度: <span id="sub3Value">0%</span></div>
+    <div class="bar"><div class="fill" id="sub3Bar">0%</div></div>
+    <div class="toggle-btn" onclick="toggleInfo('info3', this)">▼ 展开信息</div>
+    <div class="info" id="info3">
+      很好！我现在啥都还没有！
+    </div>
   </div>
+</div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <script>
-    // TODO: 把这里替换成你自己的 Firebase 配置
-    const firebaseConfig = {
-      apiKey: "你的APIKEY",
-      authDomain: "xxx.firebaseapp.com",
-      databaseURL: "https://xxx.firebaseio.com",
-      projectId: "xxx",
-      storageBucket: "xxx.appspot.com",
-      messagingSenderId: "xxx",
-      appId: "xxx"
-    };
+<!-- 不再手动写漂浮元素，JS 自动生成 -->
+<script>
+  const icons = ['❤️','💖','💗','💓','💞','💕','❣','💘','💝','💟','💌','⭐','✨','🎉','🎀','🎁','🐶','🐱‍🐉'];
+  const numFloating = 30; // 漂浮元素数量
+  const body = document.body;
 
-    // 初始化 Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+  for(let i=0; i<numFloating; i++){
+    const span = document.createElement('div');
+    span.className = 'floating';
+    span.style.left = Math.random() * 100 + 'vw'; // 随机水平位置
+    span.style.top = Math.random() * 100 + 'vh';  // 随机垂直初始位置
+    span.style.fontSize = (15 + Math.random() * 25) + 'px'; // 随机大小
+    span.style.animationDuration = (3 + Math.random() * 5) + 's'; // 随机漂浮速度
+    span.style.opacity = 0.5 + Math.random() * 0.5; // 随机透明度
+    span.textContent = icons[Math.floor(Math.random() * icons.length)];
+    body.appendChild(span);
+  }
+</script>
 
-    // 监听数据库中的进度数据
-    db.ref("progress").on("value", (snapshot) => {
-      const data = snapshot.val() || { main: 0, sub1: 0, sub2: 0 };
-      updateBar("main", data.main);
-      updateBar("sub1", data.sub1);
-      updateBar("sub2", data.sub2);
-    });
 
-    function updateBar(name, value) {
-      document.getElementById(name + "Value").textContent = value + "%";
-      document.getElementById(name + "Bar").style.width = value + "%";
+
+
+
+<script>
+  // 折叠展开功能
+  function toggleInfo(id, btn) {
+    const info = document.getElementById(id);
+    if(info.style.display === "block"){
+      info.style.display = "none";
+      btn.textContent = "▼ 展开信息";
+    } else {
+      info.style.display = "block";
+      btn.textContent = "▲ 收起信息";
     }
-  </script>
+  }
+
+  // 离线模拟进度数据
+  const progressData = {
+    main: 85,
+    sub1: 50,
+    sub2: 70,
+    sub3: 30
+  };
+
+  function updateBar(name, value){
+    const bar = document.getElementById(name+"Bar");
+    const text = document.getElementById(name+"Value");
+    bar.style.width = value + "%";
+    bar.textContent = value + "%";
+    text.textContent = value + "%";
+  }
+
+  // 动态演示加载效果
+  let main=0, sub1=0, sub2=0, sub3=0;
+  const interval = setInterval(()=>{
+    if(main<progressData.main) main++;
+    if(sub1<progressData.sub1) sub1++;
+    if(sub2<progressData.sub2) sub2++;
+    if(sub3<progressData.sub3) sub3++;
+
+    updateBar("main", main);
+    updateBar("sub1", sub1);
+    updateBar("sub2", sub2);
+    updateBar("sub3", sub3);
+
+    if(main>=progressData.main && sub1>=progressData.sub1 && sub2>=progressData.sub2 && sub3>=progressData.sub3){
+      clearInterval(interval);
+    }
+  },20);
+</script>
+
 </body>
 </html>
